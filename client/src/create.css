@@ -1,0 +1,196 @@
+/* ==========================================================================
+   Дизайн «Nocturne» (тёмная тема).
+   Цвета и размеры вынесены в переменные в блоке :root — чтобы поменять
+   внешний вид, достаточно поправить их там.
+   ========================================================================== */
+
+/* --- Шрифт Inter. Файлы лежат в папке fonts/, по одному на набор символов;
+       браузер скачивает только те, что реально нужны странице. --- */
+@font-face {
+  font-family: 'Inter'; font-style: normal; font-weight: 100 900; font-display: swap;
+  src: url('fonts/inter-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+@font-face {
+  font-family: 'Inter'; font-style: normal; font-weight: 100 900; font-display: swap;
+  src: url('fonts/inter-cyrillic.woff2') format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Inter'; font-style: normal; font-weight: 100 900; font-display: swap;
+  src: url('fonts/inter-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Inter'; font-style: normal; font-weight: 100 900; font-display: swap;
+  src: url('fonts/inter-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* --- Переменные (цвета, скругление) --- */
+:root {
+  --color-bg: #161826;          /* фон страницы */
+  --color-surface: #232532;     /* фон строки тира */
+  --color-text: #e9e9ed;
+  --color-accent: #9184d9;      /* акцент: основные кнопки, рамка фокуса */
+  --color-divider: color-mix(in srgb, #e9e9ed 16%, transparent);
+
+  /* нейтральная шкала: 100 — самый светлый, 900 — самый тёмный */
+  --color-neutral-100: #f3f5fe;
+  --color-neutral-300: #cfd3e5;
+  --color-neutral-400: #b2b6ca;
+  --color-neutral-500: #9397ab;
+  --color-neutral-600: #75798c;
+  --color-neutral-700: #595d6c;
+  --color-neutral-800: #3f424d;
+  --color-neutral-900: #292b31;
+
+  --radius-sm: 4px;
+  --radius-md: 8px;
+}
+
+/* --- База --- */
+*, *::before, *::after { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--color-bg); color: var(--color-text);
+  font-family: "Inter", system-ui, sans-serif; font-size: 15px; line-height: 1.55;
+}
+h1, h2 { font-weight: 500; line-height: 1.12; letter-spacing: -0.015em; margin: 0; }
+:focus { outline: none; }
+:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+::selection { background: color-mix(in srgb, var(--color-accent) 30%, transparent); }
+
+/* --- Каркас страницы --- */
+.page {
+  min-height: 100vh;
+  padding: 48px clamp(16px, 5vw, 64px) 64px;
+  background: radial-gradient(1200px 600px at 0% 0%, var(--color-neutral-900), transparent 60%), var(--color-bg);
+}
+.container { max-width: 1080px; display: flex; flex-direction: column; gap: 28px; }
+
+/* --- Шапка --- */
+.header { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px; }
+.header-text { display: flex; flex-direction: column; gap: 8px; }
+.eyebrow {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 12px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--color-neutral-400);
+}
+.eyebrow-line { width: 20px; height: 2px; background: var(--color-neutral-400); }
+.header h1 { font-size: clamp(28px, 4vw, 40px); letter-spacing: -0.02em; }
+/* Заголовок редактируется кликом (contenteditable ставит скрипт): при наведении слегка подсвечиваем.
+   Отрицательный margin компенсирует padding, чтобы текст не сдвигался относительно остальных строк. */
+.header h1 {
+  width: fit-content; max-width: 100%; min-width: 1ch;
+  margin: 0 -8px; padding: 0 8px;
+  border-radius: var(--radius-md); cursor: text; overflow-wrap: anywhere;
+  transition: background 120ms;
+}
+.header h1:hover { background: color-mix(in srgb, var(--color-text) 6%, transparent); }
+.subtitle { margin: 0; color: var(--color-neutral-400); font-size: 15px; text-wrap: pretty; }
+.header-actions { display: flex; gap: 8px; }
+
+/* --- Кнопки --- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  cursor: pointer; white-space: nowrap;
+  font-family: inherit; font-weight: 500; font-size: 14px; line-height: 1.2; /* кнопки сами шрифт не наследуют */
+  color: var(--color-text); background: transparent;
+  border: 1px solid transparent; border-radius: var(--radius-md);
+  padding: 6px 10px;
+}
+.btn svg { display: block; }
+.btn input[type=file] { display: none; }
+.btn-primary { color: var(--color-accent); border-color: var(--color-accent); }
+.btn-primary:hover { background: color-mix(in srgb, var(--color-accent) 12%, transparent); }
+.btn-primary:active { background: color-mix(in srgb, var(--color-accent) 22%, transparent); }
+.btn-secondary { border-color: var(--color-divider); }
+.btn-secondary:hover { background: color-mix(in srgb, var(--color-text) 7%, transparent); }
+.btn-secondary:active { background: color-mix(in srgb, var(--color-text) 14%, transparent); }
+
+/* --- Доска с тирами --- */
+.board { display: flex; flex-direction: column; gap: 6px; }
+.board-empty {
+  padding: 28px 18px; text-align: center; font-size: 14px;
+  border: 1px dashed var(--color-neutral-700); border-radius: var(--radius-md);
+  color: var(--color-neutral-500);
+}
+
+/* Строка тира: цветная плашка | зона для картинок | кнопка удаления ряда */
+.tier {
+  display: grid; grid-template-columns: 88px minmax(0, 1fr) auto; min-height: 96px;
+  border-radius: var(--radius-md); background: var(--color-surface);
+  box-shadow: inset 0 0 0 1px transparent; overflow: hidden;
+  transition: background 120ms, box-shadow 120ms;
+}
+/* класс .over вешается скриптом, пока над строкой тащат картинку */
+.tier.over { background: var(--color-neutral-900); box-shadow: inset 0 0 0 1px var(--color-neutral-400); }
+
+/* Цвет плашки приходит из скрипта через переменные --tier-bg и --tier-ink */
+.tier-label {
+  position: relative;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
+  padding: 8px 6px;
+  /* значения по умолчанию; скрипт перекрывает их инлайн-стилем */
+  --tier-bg: var(--color-neutral-700); --tier-ink: var(--color-neutral-100);
+  background: var(--tier-bg); color: var(--tier-ink);
+  transition: background 120ms;
+}
+/* Название: поднято над невидимым выбором цвета (z-index), поэтому клик по тексту — переименование */
+.tier-name {
+  position: relative; z-index: 1;
+  width: fit-content; min-width: 28px; max-width: 100%;
+  font-size: 32px; font-weight: 500; line-height: 1.1; text-align: center;
+  overflow-wrap: anywhere; cursor: text;
+}
+.tier-name:focus { outline: 2px solid currentColor; outline-offset: 2px; border-radius: 4px; }
+.tier-count { font-size: 11px; opacity: 0.75; font-variant-numeric: tabular-nums; pointer-events: none; }
+/* Невидимый <input type="color"> на всю плашку: клик мимо названия открывает палитру */
+.tier-color {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  opacity: 0; cursor: pointer; border: 0; padding: 0;
+}
+/* Кнопка «Удалить ряд» — в третьей колонке справа */
+.tier-actions { display: flex; align-items: flex-start; padding: 8px; }
+.tier-del {
+  display: flex; align-items: center; justify-content: center;
+  width: 28px; height: 28px; padding: 0; border: 0; border-radius: var(--radius-sm);
+  background: transparent; color: var(--color-neutral-600); cursor: pointer;
+}
+.tier-del:hover { color: var(--color-text); background: var(--color-neutral-800); }
+
+/* --- Зона с картинками (и в тире, и в запасе) --- */
+.items { display: flex; flex-wrap: wrap; align-content: center; gap: 6px; padding: 8px; }
+
+/* Картинка = div-обёртка (её тащим) + img внутри */
+.item {
+  position: relative; width: 80px; height: 80px; flex-shrink: 0;
+  border-radius: var(--radius-md); overflow: hidden;
+  background: var(--color-neutral-900); border: 1px solid var(--color-neutral-800);
+  cursor: grab;
+}
+.item:hover { border-color: var(--color-neutral-400); }
+.item.dragging { opacity: 0.35; }
+.item img { display: block; width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+.item .del {
+  position: absolute; top: 4px; right: 4px;
+  display: flex; align-items: center; justify-content: center;
+  width: 20px; height: 20px; padding: 0; border: 0; border-radius: 4px;
+  font-size: 11px; line-height: 1; cursor: pointer;
+  background: var(--color-bg); color: var(--color-neutral-300);
+}
+.item .del:hover { color: var(--color-text); background: var(--color-neutral-800); }
+
+/* --- Запас (неразобранные картинки) --- */
+.pool {
+  display: flex; flex-direction: column; gap: 14px; padding: 18px;
+  border-radius: var(--radius-md); border: 1px dashed var(--color-neutral-700);
+  background: transparent; transition: background 120ms, border-color 120ms;
+}
+.pool.over { background: var(--color-neutral-900); border-color: var(--color-neutral-400); }
+.pool-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; }
+.pool-title { display: flex; align-items: baseline; gap: 10px; }
+.pool-title h2 { font-size: 16px; letter-spacing: normal; }
+.count { font-size: 13px; color: var(--color-neutral-500); font-variant-numeric: tabular-nums; }
+.pool .items { padding: 0; min-height: 80px; align-content: flex-start; }
+.pool-empty { align-self: center; font-size: 13px; color: var(--color-neutral-600); }

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- CSP: разрешаем только свои файлы; картинки ещё из data:/blob: (так хранятся загруженные) -->
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; img-src 'self' data: blob:; object-src 'none'; base-uri 'self'; form-action 'none'">
+  <title>Tier List Maker</title>
+  <link rel="stylesheet" href="create.css">
+  <!-- defer: скрипт выполнится после того, как страница разобрана и все элементы уже есть -->
+  <script src="create.js" defer></script>
+</head>
+<body>
+  <div class="page">
+    <div class="container">
+
+      <header class="header">
+        <div class="header-text">
+          <div class="eyebrow"><span class="eyebrow-line"></span>Tier list</div>
+          <h1 id="title" title="Нажмите, чтобы переименовать">Мой tier list</h1>
+          <p class="subtitle">Создайте тиры, добавьте картинки и перетащите их в нужный ряд.</p>
+        </div>
+        <div class="header-actions">
+          <button id="addTier" class="btn btn-primary">+ Добавить тир</button>
+          <button id="reset" class="btn btn-secondary">Очистить</button>
+        </div>
+      </header>
+
+      <!-- Сюда скрипт рисует тиры -->
+      <div id="board" class="board"></div>
+
+      <!-- Запас: section принимает drop, внутри него #pool — список картинок -->
+      <section id="poolZone" class="pool" data-zone="pool">
+        <div class="pool-head">
+          <div class="pool-title">
+            <h2>Запас</h2>
+            <span id="poolCount" class="count">0</span>
+          </div>
+          <label class="btn btn-primary">
+            <svg width="16" height="16" viewBox="0 0 256 256" fill="currentColor"><path d="M216 40H40a16 16 0 0 0-16 16v144a16 16 0 0 0 16 16h176a16 16 0 0 0 16-16V56a16 16 0 0 0-16-16Zm0 16v102.75l-26.07-26.06a16 16 0 0 0-22.63 0l-20 20-44-44a16 16 0 0 0-22.62 0L40 149.37V56ZM40 172l52-52 80 80H40Zm176 28h-21.37l-36-36 20-20L216 181.38V200Zm-72-100a12 12 0 1 1 12 12 12 12 0 0 1-12-12Z"></path></svg>
+            <span>Добавить</span>
+            <input type="file" id="file" accept="image/*" multiple>
+          </label>
+        </div>
+        <div id="pool" class="items"></div>
+      </section>
+
+    </div>
+  </div>
+</body>
+</html>
